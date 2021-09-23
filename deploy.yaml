@@ -10,7 +10,7 @@ config:
 
 hosts:
     prod:
-        remote_user: root
+        remote_user: bloggy
         hostname: bloggy.site
         deploy_path: '/var/www/{{hostname}}'
 
@@ -22,6 +22,7 @@ tasks:
         - artisan:view:cache
         - artisan:config:cache
         - artisan:migrate
+        - npm:install
         - npm:run:prod
         - deploy:publish
         - php-fpm:reload
