@@ -9,6 +9,7 @@
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form class="mt-8 space-y-6" method="POST" action="{{ route('login') }}">
+            <p>test content</p>
             <div class="rounded-md shadow-sm space-y-4">
                 @csrf
 
