@@ -1,10 +1,11 @@
 import:
-    - recipe/magento2.php
+    - recipe/laravel.php
     - contrib/php-fpm.php
+    - contrib/npm.php
 
 config:
     application: 'bloggy'
-    repository: 'git@github.com:invictaecommteam/invicta.git'
+    repository: 'git@github.com:aidavia/blog.git'
     php_fpm_version: '7.4'
     keep_releases: 3
 
@@ -12,4 +13,24 @@ hosts:
     prod:
         remote_user: bloggy
         hostname: bloggy.site
-        deploy_path: '~/{{hostname}}'
+        deploy_path: '/var/www/{{hostname}}'
+
+tasks:
+    deploy:
+        - deploy:prepare
+        - deploy:vendors
+        - artisan:storage:link
+        - artisan:view:cache
+        - artisan:config:cache
+        - artisan:route:cache
+        - artisan:migrate
+        - npm:install
+        - npm:run:prod
+        - deploy:publish
+        - php-fpm:reload
+    npm:run:prod:
+        script:
+            - 'cd {{release_path}} && npm run prod'
+
+after:
+    deploy:failed: deploy:unlock
