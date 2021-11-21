@@ -23,8 +23,8 @@ jobs:
 
             - name: Set up secret file
               env:
-                  DEBUG_PASSWORD: ${{ secrets.PRIVATE_KEY }}
-                  DEBUG_SECRET_KEY: ${{ secrets.KNOWN_HOSTS }}
+                  PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+                  KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
               run: |
                 echo $PRIVATE_KEY >> secrets.txt
                 echo $KNOWN_HOSTS >> secrets.txt
